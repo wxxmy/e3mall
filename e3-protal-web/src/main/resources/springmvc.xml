@@ -37,4 +37,12 @@ http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	<!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
 	<!-- 使用dubbo从Zookeeper注册中心获取服务 -->
 	<dubbo:registry protocol="zookeeper" address="192.168.32.129:2181" />
+	
+	<!-- 引用创建节点分类目服务 -->
+	<dubbo:reference interface="cn.e3.content.service.ContentService"
+		id="contentService" timeout="1000000" />
+		
+	<!-- 引用创建节点分类目服务 -->
+	<dubbo:reference interface="cn.e3.content.jedis.JedisService"
+		id="jedisService" timeout="1000000" />
 </beans>
