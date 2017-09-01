@@ -1,13 +1,18 @@
 package cn.e3.content.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import cn.e3.content.jedis.JedisService;
 import cn.e3.content.service.ContentService;
 import cn.e3.domain.TbContent;
 import cn.e3.domain.TbContentCategory;
@@ -15,10 +20,36 @@ import cn.e3.domain.TbContentExample;
 import cn.e3.domain.TbContentExample.Criteria;
 import cn.e3.mapper.TbContentCategoryMapper;
 import cn.e3.mapper.TbContentMapper;
+import cn.e3.utils.AdItem;
 import cn.e3.utils.DatagridPageBean;
 import cn.e3.utils.E3mallResult;
-
+import cn.e3.utils.JsonUtils;
+@Service
 public class ContentServiceImpl implements ContentService {
+    
+  //注入内容表Mapper接口代理对象
+    @Autowired
+    private TbContentMapper contentMapper;
+    
+    @Autowired
+    private JedisService jedisService;
+    
+    //注入广告图片宽
+    @Value("${WIDTH}")
+    private Integer WIDTH;
+    
+    @Value("${WIDTHB}")
+    private Integer WIDTHB;
+    
+    //注入广告图片高
+    @Value("${HEIGHT}")
+    private Integer HEIGHT;
+    
+    @Value("${HEIGHTB}")
+    private Integer HEIGHTB;
+    
+    @Value("${INDEX_CACHE}")
+    private String INDEX_CACHE;
 
     @Autowired
     private TbContentCategoryMapper tbContentCategoryMapper;
@@ -89,6 +120,63 @@ public class ContentServiceImpl implements ContentService {
         tbContent.setUpdated(date);
         tbContentMapper.insert(tbContent);
         return E3mallResult.ok();
+    }
+    
+    /**
+     * 需求:查询首页大广告
+     * 参数:广告类目ID
+     * 返回值:广告对象集合
+     */
+    @Override
+    public List<AdItem> findAdItemListWithCategoryId(Long categoryId) {
+        // 创建广告集合对象
+        List<AdItem> adItems = new ArrayList<>();
+        // 从缓存中获取
+        String jsonStr;
+        try {
+            jsonStr = jedisService.hget(INDEX_CACHE, categoryId+"");
+            if (StringUtils.isNotBlank(jsonStr)) {
+                
+                List<AdItem> list = JsonUtils.jsonToList(jsonStr, AdItem.class);
+                
+                return list;
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        // 创建example对象
+        TbContentExample example = new TbContentExample();
+        Criteria createCriteria = example.createCriteria();
+        createCriteria.andCategoryIdEqualTo(categoryId);
+        List<TbContent> list = tbContentMapper.selectByExample(example);
+        
+        // 遍历内容
+        for (TbContent tbContent : list) {
+            AdItem adItem = new AdItem();
+            // 设置图片地址
+            adItem.setSrc(tbContent.getPic());
+            adItem.setSrcB(tbContent.getPic2());
+            
+            // 设置图片连接和鼠标悬停文本内容
+            adItem.setAlt(tbContent.getTitleDesc());
+            adItem.setHref(tbContent.getUrl());
+            
+            // 设置图片高
+            adItem.setHeight(HEIGHT);
+            adItem.setHeightB(HEIGHTB);
+            
+            // 设置图片宽
+            adItem.setWidth(WIDTH);
+            adItem.setWidthB(WIDTHB);
+            
+            adItems.add(adItem);
+            
+            jsonStr = JsonUtils.objectToJson(adItems);
+            jedisService.hset(INDEX_CACHE, categoryId+"", jsonStr);
+        }
+        return adItems;
     }
 
 }

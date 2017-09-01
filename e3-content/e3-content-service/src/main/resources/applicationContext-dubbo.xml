@@ -39,6 +39,11 @@ http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	<!-- 发布服务 -->
 	<dubbo:service interface="cn.e3.content.service.ContentService"
 		ref="contentServiceImpl"/>
+		
+	<bean id="jedisClusterServiceImpl" class="cn.e3.content.jedis.impl.JedisClusterServiceImpl"></bean>
+	<!-- 发布服务 -->
+	<dubbo:service interface="cn.e3.content.jedis.JedisService"
+		ref="jedisClusterServiceImpl"/>
 	
 
 </beans>

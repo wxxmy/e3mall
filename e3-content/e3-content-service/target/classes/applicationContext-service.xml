@@ -16,7 +16,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 http://www.springframework.org/schema/util
 http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 <!-- 一,扫描 -->
-	<context:component-scan base-package="cn.e3.content.service"></context:component-scan>
+	<context:component-scan base-package="cn.e3.content"></context:component-scan>
 	<!-- 一.事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
