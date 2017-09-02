@@ -91,7 +91,12 @@ public class ContentServiceImpl implements ContentService {
         return E3mallResult.ok(tbContentCategory);
     }
 
-    @Override
+    
+    /**
+     * 需求:根据所选商品类名查询其下的所有内容信息
+     * 参数:Long categoryId,Integer page, Integer rows
+     * 返回值:DatagridPageBean
+     */
     public DatagridPageBean findContentListByCategoryId(Long categoryId,
             Integer page, Integer rows) {
         // 创建example对象
@@ -112,8 +117,16 @@ public class ContentServiceImpl implements ContentService {
         return pageBean;
     }
 
-    @Override
+    /**
+     * 需求:新增大广告内容
+     * 参数:TbContent tbContent
+     * 返回值:E3mallResult
+     * 描述:新增先清除缓存
+     */
     public E3mallResult saveContent(TbContent tbContent) {
+        // 新增广告内容时删除缓存
+        jedisService.hdel(INDEX_CACHE, tbContent.getCategoryId()+"");
+        
         // 保存
         Date date = new Date();
         tbContent.setCreated(date);
@@ -124,8 +137,9 @@ public class ContentServiceImpl implements ContentService {
     
     /**
      * 需求:查询首页大广告
-     * 参数:广告类目ID
-     * 返回值:广告对象集合
+     * 参数:广告类目ID,Long categoryId
+     * 返回值:广告对象集合,List<AdItem>
+     * 描述:为了查询效率加入redis缓存集群
      */
     @Override
     public List<AdItem> findAdItemListWithCategoryId(Long categoryId) {
