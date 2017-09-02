@@ -27,6 +27,7 @@ public class ItemServiceImpl implements ItemService {
     
     @Autowired
     private TbItemDescMapper tbItemDescMapper;
+    
     /**
      * 需求：根据id查询商品信息
      * 参数：Long itemId
@@ -66,12 +67,13 @@ public class ItemServiceImpl implements ItemService {
         return pageBean;
     }
     /**
-     * 需求：分页查询商品列表
-     * 参数：Integer page,Integer rows
-     * 返回值：DatagridPageBean
-     * 方法名：findItemList
+     * 需求：新增大广告图片
+     * 参数：TbItem tbItem, TbItemDesc tbItemDesc
+     * 返回值：E3mallResult
+     * 方法名：saveTbItem
      */
     public E3mallResult saveTbItem(TbItem tbItem, TbItemDesc tbItemDesc) {
+        
         // 生成商品id
         long itemId = IDUtils.genItemId();
         tbItem.setId(itemId);
