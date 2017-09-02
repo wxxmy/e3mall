@@ -41,16 +41,14 @@ http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	<!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
 	<!-- 使用dubbo从Zookeeper注册中心获取服务 -->
 	<dubbo:registry protocol="zookeeper" address="192.168.32.129:2181" />
-	<!-- 引用服务 -->
+	<!-- 引用查询商品信息服务 -->
 	<dubbo:reference interface="cn.e3.service.ItemService"
 		id="itemService"  timeout="1000000"/>
 		
+	<!-- 引用获得商品所有类名服务 -->
 	<dubbo:reference interface="cn.e3.service.ItemCatService"
 		id="itemCatService"  timeout="1000000"/>
-		
-	<!-- 引用服务 -->
-	<!-- <dubbo:reference interface="cn.e3.content.service.ContentCategoryService"
-		id="contentCategoryService"  timeout="1000000" /> -->
+	
 	<!-- 引用广告分类目服务 -->
 	<dubbo:reference interface="cn.e3.content.service.ContentCategoryService"
 		id="contentCategoryService" timeout="1000000" />
@@ -58,4 +56,8 @@ http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	<!-- 引用创建节点分类目服务 -->
 	<dubbo:reference interface="cn.e3.content.service.ContentService"
 		id="contentService" timeout="1000000" />
+		
+		<!-- 引用导入索引服务 -->
+	<dubbo:reference interface="cn.e3.search.service.SearchItemService"
+		id="searchItemService"  timeout="1000000" />
 </beans>

@@ -113,6 +113,11 @@
 				<artifactId>e3-content-interface</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
+		<dependency>
+			<groupId>cn.e3</groupId>
+			<artifactId>e3-search-interface</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
   </dependencies>
   <groupId>cn.e3</groupId>
   <version>0.0.1-SNAPSHOT</version>

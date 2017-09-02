@@ -11,7 +11,7 @@
 		
 		$.ajax({
 			type:'POST',
-			url:'${pageContext.request.contextPath}/item/dataImport',
+			url:'${pageContext.request.contextPath}/search/dataImport',
 			success:function(data){
 				if(data.status==200){
 					$.messager.alert('提示','导入索引库成功!');
