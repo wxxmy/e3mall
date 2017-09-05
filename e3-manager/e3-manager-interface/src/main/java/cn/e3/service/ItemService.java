@@ -28,4 +28,10 @@ public interface ItemService {
      * 返回值:E3mallResult
      */
     public E3mallResult saveTbItem(TbItem tbItem,TbItemDesc tbItemDesc);
+    /**
+     * 需求:根据商品ID查询到商品描述信息
+     * 参数:ItemId itemId
+     * 返回值:TbItemDesc tbItemDesc
+     */
+    public TbItemDesc findTbItemDescByTbItemId(Long ItemId);
 }

@@ -3,7 +3,14 @@ package cn.e3.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class TbItem implements Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1015368527297194947L;
+
     private Long id;
 
     private String title;
@@ -25,6 +32,19 @@ public class TbItem implements Serializable{
     private Date created;
 
     private Date updated;
+
+    // 详情页面显示多张图片
+    private String[] images;
+    public String[] getImages() {
+        if (StringUtils.isNoneBlank(image)) {
+            images = image.split(",");
+        }
+        return images;
+    }
+
+    public void setImages(String[] images) {
+        this.images = images;
+    }
 
     public Long getId() {
         return id;

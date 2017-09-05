@@ -78,6 +78,14 @@
 				<artifactId>e3-manager-interface</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-all</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+			</dependency>
   </dependencies>
   <version>0.0.1-SNAPSHOT</version>
   <groupId>cn.e3</groupId>
