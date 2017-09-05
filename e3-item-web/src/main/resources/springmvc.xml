@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://code.alibabatech.com/schema/dubbo
+http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	<!-- 扫描资源文件 -->
+	<context:property-placeholder location="classpath:resource.properties"/>
+	<!-- 1.扫描视图所在包 -->
+	<context:component-scan base-package="cn.e3.item.controller"/>
+	<!-- 2.注册驱动 -->
+	<mvc:annotation-driven/>
+	<!-- 4.视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<!-- 引用服务 -->
+	<dubbo:application name="e3-item-web" />
+	<!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+	<!-- 使用dubbo从Zookeeper注册中心获取服务 -->
+	<dubbo:registry protocol="zookeeper" address="192.168.32.129:2181" />
+	
+	<!-- 引用搜索服务 -->
+	<dubbo:reference interface="cn.e3.service.ItemService"
+		id="temService"  timeout="1000000"/>
+		
+</beans>
