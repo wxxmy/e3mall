@@ -17,4 +17,16 @@ public interface SearchItemMapper {
                                     private String category_name;
      */
     public List<SearchItem> importSolrIndexWithDatabase();
+    /**
+     * 需求:通过商品id从数据库获得solr索引对象
+     * 参数:Long ItemId
+     * 返回值:包装类对象SearchItem,
+     *              包含域字段:Long id;
+                                    private String title;
+                                    private String sell_point;
+                                    private Long price;
+                                    private String image;
+                                    private String category_name;
+     */
+    public SearchItem updateSolrIndexWithDatabase(Long ItemId);
 }
