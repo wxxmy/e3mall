@@ -178,6 +178,16 @@ public class ItemServiceImpl implements ItemService {
         jedisService.expire(ITEM_DETAIL+":DESC:"+ItemId, ITEM_DETAIL_EXPIRE_TIME);
         return tbItemDesc;
     }
+    @Override
+    public TbItem findTbItemWithItemId(Long itemId) {
+        TbItem tbItem = tbItemMapper.selectByPrimaryKey(itemId);
+        return tbItem;
+    }
+    @Override
+    public TbItemDesc findTbItemDescWithItemId(Long itemId) {
+        TbItemDesc tbItemDesc = tbItemDescMapper.selectByPrimaryKey(itemId);
+        return tbItemDesc;
+    }
     
   
 }

@@ -34,4 +34,14 @@ public interface ItemService {
      * 返回值:TbItemDesc tbItemDesc
      */
     public TbItemDesc findTbItemDescByTbItemId(Long ItemId);
+    /**
+     * 需求:查询数据库获得商品详情,以区分缓存
+     * @param itemId
+     */
+    public TbItem findTbItemWithItemId(Long itemId);
+    /**
+     * 需求:查询数据库获得商品描述,以区分缓存
+     * @param itemId
+     */
+    public TbItemDesc findTbItemDescWithItemId(Long itemId);
 }
