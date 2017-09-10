@@ -41,5 +41,5 @@ http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	<!-- 引用创建节点分类目服务 -->
 	<dubbo:reference interface="cn.e3.user.service.UserService"
 		id="userService" timeout="1000000" />
-		
+		 
 </beans>
