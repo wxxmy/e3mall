@@ -16,7 +16,7 @@
 		</tr>
 		<#list list as p>
 		<tr>
-			<td>${p_index}</td>
+			<td>${p_index!}</td>
 			<td>${p.username!}</td>
 			<td>${p.age!}</td>
 			<td>${p.sex!}</td>
